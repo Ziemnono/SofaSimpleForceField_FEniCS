@@ -33,8 +33,8 @@ def createScene(root):
     root.addObject('RequiredPlugin',
                    pluginName="SofaOpenglVisual SofaSimpleForcefield SofaBaseMechanics SofaBaseTopology SofaSparseSolver SofaImplicitOdeSolver SofaTopologyMapping SofaBoundaryCondition SofaEngine")
 
-    root.addObject('RegularGridTopology', name="grid", min="-7.5 -7.5 0", max="7.5 7.5 80", n="9 9 21")
-    root.addObject('StaticSolver', newton_iterations="25", relative_correction_tolerance_threshold="1e-15",
+    root.addObject('RegularGridTopology', name="grid", min="0 0 0", max="1 1 1", n="2 2 2")
+    root.addObject('StaticSolver', newton_iterations="1", relative_correction_tolerance_threshold="1e-15",
                    relative_residual_tolerance_threshold="1e-10", printLog="1")
     root.addObject('SparseLDLSolver', template="CompressedRowSparseMatrixMat3x3d")
 

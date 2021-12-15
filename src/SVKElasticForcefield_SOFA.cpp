@@ -1,6 +1,7 @@
 #include "SVKElasticForcefield_SOFA.h"
 #include <sofa/core/ObjectFactory.h>
 #include <sofa/core/visual/VisualParams.h>
+#include <iostream>
 
 SVKElasticForcefield_SOFA::SVKElasticForcefield_SOFA()
 : d_youngModulus(initData(&d_youngModulus,
@@ -167,6 +168,7 @@ void SVKElasticForcefield_SOFA::addForce(const sofa::core::MechanicalParams */*m
         Eigen::Matrix<double, Element::NumberOfNodes, 3, Eigen::RowMajor> node_positions;
         for (Eigen::Index node_id = 0; node_id < Element::NumberOfNodes; ++node_id) {
             node_positions.row(node_id) = x.row(node_indices(element_id, node_id));
+            if (element_id==0) std::cout<<x.row(node_indices(element_id, node_id)) << "\n";
         }
 
         for (const GaussNode & gauss_node : p_gauss_nodes[element_id]) {
@@ -282,6 +284,7 @@ void SVKElasticForcefield_SOFA::addKToMatrix(sofa::defaulttype::BaseMatrix * mat
 
                 // The 3x3 sub-matrix Kii is symmetric
                 Mat33 Kii = (dxi.dot(S*dxi)*Id + Bi.transpose()*D*Bi) * (detJ * w) * -kFact;
+                if (element_id==0) std::cout << Kii;
                 for (int m = 0; m < 3; ++m) {
                     matrix->add(I + m, I + m, Kii(m, m));
                     for (int n = m+1; n < 3; ++n) {
@@ -306,6 +309,7 @@ void SVKElasticForcefield_SOFA::addKToMatrix(sofa::defaulttype::BaseMatrix * mat
 
                     // The 3x3 sub-matrix Kij is NOT symmetric, we store its full part
                     const Mat33 Kij = (dxi.dot(S*dxj)*Id + Bi.transpose()*D*Bj) * (detJ * w) * -kFact;
+//                    if (element_id==0) std::cout << Kij;
                     for (int m = 0; m < 3; ++m) {
                         for (int n = 0; n < 3; ++n) {
                             matrix->add(I + m, J + n, Kij(m, n));
