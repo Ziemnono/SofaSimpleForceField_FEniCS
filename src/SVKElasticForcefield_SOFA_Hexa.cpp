@@ -284,7 +284,7 @@ void SVKElasticForcefield_SOFA_Hexa::addKToMatrix(sofa::defaulttype::BaseMatrix 
 
                 // The 3x3 sub-matrix Kii is symmetric
                 Mat33 Kii = (dxi.dot(S*dxi)*Id + Bi.transpose()*D*Bi) * (detJ * w) * -kFact;
-                if (element_id==0) std::cout << Kii;
+//                if (element_id==0) std::cout << Kii;
                 for (int m = 0; m < 3; ++m) {
                     matrix->add(I + m, I + m, Kii(m, m));
                     for (int n = m+1; n < 3; ++n) {
@@ -319,6 +319,13 @@ void SVKElasticForcefield_SOFA_Hexa::addKToMatrix(sofa::defaulttype::BaseMatrix 
                 }
             }
         }
+    }
+    for (int i =0; i<25; i++) {
+        for (int j =0; j<25 ;j++ ) {
+                std :: cout << matrix->element(i,j) << "\t";
+                if (j==24) std::cout << "\n";
+        }
+
     }
 }
 
