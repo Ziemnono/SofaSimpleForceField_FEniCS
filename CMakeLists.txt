@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.15)
 project(SofaSimpleForcefield VERSION 1.0)
 
 find_package(Sofa.Core REQUIRED)
+find_package(SofaCaribou REQUIRED)
+find_package(Caribou REQUIRED)
 find_package(Eigen3 REQUIRED)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -18,7 +20,7 @@ add_library(${PROJECT_NAME} SHARED src/init.cpp
     src/SVKElasticForcefield_FEniCS_Hexa.cpp
     #src/Python/SVKElasticForcefield_FEniCS.cpp
     )
-target_link_libraries(${PROJECT_NAME} PUBLIC Sofa.Core Eigen3::Eigen)
+target_link_libraries(${PROJECT_NAME} PUBLIC Sofa.Core Eigen3::Eigen Caribou::Config Caribou::Algebra Caribou::Geometry Caribou::Topology Caribou::Mechanics SofaCaribou)
 
 sofa_create_package_with_targets(
     PACKAGE_NAME ${PROJECT_NAME}
