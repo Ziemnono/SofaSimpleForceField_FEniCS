@@ -27,12 +27,13 @@ cmake -DCMAKE_INSTALL_PREFIX=$SOFA_ROOT -DCMAKE_BUILD_TYPE=Release -S $SOFA_SRC 
 cmake --build $SOFA_SRC/build -j4
 cmake --install $SOFA_SRC/build
 ```
+### Caribou (if we decide to keep it as a dependency)
 
 ### SofaSimpleForcefield
 ```console
 export SSFF_SRC=/opt/SofaSimpleForceField_FEniCS
 git clone git@github.com:Ziemnono/SofaSimpleForceField_FEniCS.git $SSFF_SRC
-cmake -DCMAKE_PREFIX_PATH=$SOFA_ROOT/lib/cmake -DCMAKE_INSTALL_PREFIX=$SOFA_ROOT/plugins/SofaSimpleForceField -DCMAKE_BUILD_TYPE=Release -S $SSFF_SRC -B $SSFF_SRC/build
+cmake -DCMAKE_PREFIX_PATH="$SOFA_ROOT/lib/cmake,$CARIBOU_ROOT/lib/cmake" -DCMAKE_INSTALL_PREFIX=$SOFA_ROOT/plugins/SofaSimpleForceField -DCMAKE_BUILD_TYPE=Release -S $SSFF_SRC -B $SSFF_SRC/build
 cmake --build $SSFF_SRC/build -j4
 cmake --install $SSFF_SRC/build
 ```
