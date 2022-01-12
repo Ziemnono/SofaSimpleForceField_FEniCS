@@ -1,5 +1,6 @@
 # Required import for python
 import Sofa
+import SofaCaribou
 
 
 # Choose in your script to activate or not the GUI
@@ -45,13 +46,35 @@ def createScene(root):
     root.addObject('Hexa2TetraTopologicalMapping', input="@grid", output="@topology", swapping="1")
 
     root.addObject('SVKElasticForcefield_SOFA', youngModulus="3000", poissonRatio="0.3", topology="@topology")
+    # root.addObject('SaintVenantKirchhoffMaterial', young_modulus=3000, poisson_ratio=0.3)
+    # root.addObject('HyperelasticForcefield', printLog=True)
 
     root.addObject('BoxROI', name="fixed_roi", box="-7.5 -7.5 -0.9 7.5 7.5 0.1")
     root.addObject('FixedConstraint', indices="@fixed_roi.indices")
     root.addObject('BoxROI', name="top_roi", box="-7.5 -7.5 79.9 7.5 7.5 80.1")
-    # root.addObject('TriangleSetGeometryAlgorithms')
-    # root.addObject('TrianglePressureForceField', pressure="0 -10 0", topology="@topology", triangleList="@top_roi.triangleIndices", showForces="1")
     root.addObject('ConstantForceField', force="0 -10 0", indices="@top_roi.indices")
+
+    # import meshio
+    # beam_p1 = meshio.read("./beam_p1.vtu")
+
+
+    # root.addObject('StaticSolver', newton_iterations="25", relative_correction_tolerance_threshold="1e-15", relative_residual_tolerance_threshold="1e-10", printLog="1")
+    # root.addObject('SparseLDLSolver', template="CompressedRowSparseMatrixMat3x3d")
+
+    # root.addObject('MechanicalObject', name="mo", position=beam_p1.points.tolist())
+    # root.addObject('CaribouTopology', name='topology', template='Tetrahedron', indices=beam_p1.cells_dict['tetra'].tolist())
+    # # root.addObject('TetrahedronSetTopologyContainer', name="topology")
+    # # root.addObject('TetrahedronSetTopologyModifier')
+    # # root.addObject('Hexa2TetraTopologicalMapping', input="@grid", output="@topology", swapping="1")
+
+    # root.addObject('SVKElasticForcefield_SOFA', youngModulus="3000", poissonRatio="0.3", topology="@topology")
+    # # root.addObject('SaintVenantKirchhoffMaterial', young_modulus=3000, poisson_ratio=0.3)
+    # # root.addObject('HyperelasticForcefield', printLog=True)
+
+    # root.addObject('BoxROI', name="fixed_roi", box="-7.5 -7.5 -0.9 7.5 7.5 0.1")
+    # root.addObject('FixedConstraint', indices="@fixed_roi.indices")
+    # root.addObject('BoxROI', name="top_roi", box="-7.5 -7.5 79.9 7.5 7.5 80.1")
+    # root.addObject('ConstantForceField', force="0 -10 0", indices="@top_roi.indices")
 
 
     return root
